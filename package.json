@@ -1,0 +1,25 @@
+{
+  "name": "hands-on-express-api",
+  "version": "1.0.0",
+  "description": "Shop Node RESTful API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sweettirexkiller/hands-on-express-api.git"
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Piotr Jankiewicz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sweettirexkiller/hands-on-express-api/issues"
+  },
+  "homepage": "https://github.com/sweettirexkiller/hands-on-express-api#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
