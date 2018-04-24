@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/order');
+const Product = require('../models/product');
 const mongoose = require('mongoose');
 
 router.get("/", (req, res, next) => {
@@ -30,13 +31,20 @@ router.get("/", (req, res, next) => {
 
 
 router.post("/", (req, res, next) => {
-    const order = new Order({
-        _id: new mongoose.Types.ObjectId(),
-        product: req.body.productId,
-        quantity: req.body.quantity
-    });
-
-    order.save()
+    Product.findById(req.body.productId)
+        .then(product => {
+            if(!product){
+                return res.status(404).json({
+                    message: "Product not found"
+                })
+            }
+            const order = new Order({
+                _id: new mongoose.Types.ObjectId(),
+                product: req.body.productId,
+                quantity: req.body.quantity
+            });
+            return order.save();
+        })
         .then(result =>{
             res.status(201).json({
                 order: {
@@ -51,7 +59,7 @@ router.post("/", (req, res, next) => {
             })
         })
         .catch(error => {
-            res.status(500).json({error})
+            res.status(500).json(error)
         });
 });
 
@@ -73,13 +81,21 @@ router.get("/:orderId", (req, res, next) => {
 });
 
 router.delete("/:orderId", (req, res, next) => {
-    Order.remove({_id: req.params.orderId})
-        .exec()
+    Order.remove({_id: req.params.orderId}).exec()
         .then(result =>{
-            res.staus(200).json(result);
+            res.status(200).json({
+                message: "Order deleted",
+                requests :{
+                    type: "POST",
+                    url: `http://localhost:3000/orders`,
+                    body:{ productId: 'ID', quantity: "Number" }
+                }
+            });
         })
-        .catch(error=>{
-            res.status(500).json({error});
+        .catch(err=>{
+            res.status(500).json({
+                error: err
+            });
         });
 });
 

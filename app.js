@@ -5,11 +5,6 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
-app.use(morgan('dev'));
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
-
-mongoose.connect(`mongodb://node-shop:${process.env.MONGO_ATLAS_PW}@node-shop-shard-00-00-gpxsx.mongodb.net:27017,node-shop-shard-00-01-gpxsx.mongodb.net:27017,node-shop-shard-00-02-gpxsx.mongodb.net:27017/test?ssl=true&replicaSet=node-shop-shard-0&authSource=admin`, {});
 
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", '*');
@@ -20,6 +15,12 @@ app.use((req, res, next) => {
     }
     next()
 });
+
+app.use(morgan('dev'));
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
+mongoose.connect(`mongodb://node-shop:${process.env.MONGO_ATLAS_PW}@node-shop-shard-00-00-gpxsx.mongodb.net:27017,node-shop-shard-00-01-gpxsx.mongodb.net:27017,node-shop-shard-00-02-gpxsx.mongodb.net:27017/test?ssl=true&replicaSet=node-shop-shard-0&authSource=admin`, {});
 
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
