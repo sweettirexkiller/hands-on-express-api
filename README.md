@@ -10,7 +10,7 @@ This project is pure API. No front-end created.
 4) `nano app.js`
 
         ...
-        mongoose.connect('mongodb://localhost/YOUR_DB_HERE', {promiseLibrary: require('bluebird')});
+        mongoose.connect('mongodb://localhost/YOUR_DB_HERE');
         ...
         
     `ctrl+O ctrl+X`
